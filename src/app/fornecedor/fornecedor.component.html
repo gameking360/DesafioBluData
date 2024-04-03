@@ -1,0 +1,89 @@
+
+<div class="row g-2">
+
+<div class="col-md input-group">
+<label class="input-group-text" for="filto">Filtro</label>
+<select class="form-select" name="filtro" id="filto" [(ngModel)]="filtroSelecionado">
+  <option value="">Todos</option>
+  <option value="Nome">Nome</option>
+  <option value="Empresa">Empresa</option>
+  <option value="Data">Data</option>
+</select>
+</div>
+
+<div class="col-md">
+<form (submit)="Filtrar()">
+  @if (filtroSelecionado == "Nome"){
+  <div class="input-group md-3">
+    <label class="input-group-text" for="Nome">Nome</label>
+    <input class="form-control" type="text"  id="Nome" #Nome placeholder="Nome">
+    <button class="btn btn-outline-primary" type="submit">Filtrar</button>
+  </div>
+  }
+  @else if (filtroSelecionado == "Empresa") {
+    
+    <div class="input-group md-3">
+      <label class="input-group-text" for="Empresa">Empresa</label>
+      <input class="form-control md-3" type="text" id="Empresa" #Empresa placeholder="Empresa">
+      <button class="btn btn-outline-primary" type="submit">Filtrar</button>
+    </div>
+
+  }  
+  @else if(filtroSelecionado == "Data"){
+    <div class="input-group">
+    <label class="input-group-text" for="Data">Data</label>
+    <input class="form-control md-3" type="date" id="Data" #Data name="Data" >
+    <button class="btn btn-outline-primary" type="submit">Filtrar</button>
+    </div>
+
+  }  
+
+
+</form>
+</div>
+
+</div>
+
+<button class="btn btn-info" (click)="openFormFornecedor()" >Novo Fornecedor</button>
+
+
+@if (fornecedores.length == 0) {
+    <h4>Não há nenhum fornecedor</h4>
+}
+
+@else {
+    <table mat-table [dataSource]="fornecedores" class="mat-elevation-z8">
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Nome </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+      
+        <!-- Empresa Column -->
+        <ng-container matColumnDef="empresa">
+          <th mat-header-cell *matHeaderCellDef> Empresa </th>
+          <td mat-cell *matCellDef="let element"> {{element.empresa}} </td>
+        </ng-container>
+      
+        <!-- Hora Column -->
+        <ng-container matColumnDef="horaCadastro">
+          <th mat-header-cell *matHeaderCellDef> Hora de Cadastro </th>
+          <td mat-cell *matCellDef="let element"> {{element.horaCadastro}} </td>
+        </ng-container>
+      
+        <!-- Tipo Column -->
+        <ng-container matColumnDef="tipo">
+          <th mat-header-cell *matHeaderCellDef> Tipo </th>
+          <td mat-cell *matCellDef="let element"> {{element.tipo}} </td>
+        </ng-container>
+      
+      
+          
+        <tr mat-header-row *matHeaderRowDef="displayCollumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayCollumns;"></tr>
+      </table>
+}

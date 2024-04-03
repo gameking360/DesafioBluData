@@ -1,0 +1,63 @@
+<form [formGroup]="actualForm" (ngSubmit)="formSubmit()">
+
+<select class="form-select mb-4" aria-label="Tipo de Fornecedor" (change)="loadForm()">
+    <option value="PF">Pessoa Física</option>
+    <option value="PJ">Pessoa Jurídica</option>
+</select>
+
+<div class="input-group mb-3">
+<label class="input-group-text" for="idEmpresa">Empresa</label>
+<select class="form-select"  id="idEmpresa" formControlName="idEmpresa" aria-label="Escolha a empresa">
+    @for (item of companys; track item){
+
+        <option value="{{item.id}}">{{item.nomeFantasia}}</option>
+    }
+</select>
+</div>
+@if(actualForm == formFornecedorFisica){
+    <div>
+        <div class='input-group mb-3'>
+            <input type='text' class="form-control" name='name' placeholder='Nome' id='nome' formControlName='name' autocomplete="off">
+            </div>
+            <div class='input-group mb-3'>
+            <input type='text' class="form-control" name='cpf' placeholder='CPF' id='cpf' formControlName='cpf' autocomplete="off" (keyup)="mascaraCPF($event)" maxlength="14">
+            </div>
+            <div class='input-group mb-3'>
+            <input type='text' class="form-control" name='rg' id='rg' placeholder='RG' formControlName='rg' (keyup)="mascaraRG($event)" maxlength="12">
+            </div> 
+            <div class='input-group mb-3'>
+            <input type='date' class="form-control" name='dataNascimento' id='dataNascimento' placeholder='2020-10-10' formControlName='dataNascimento'>
+            </div>
+    </div>
+    
+}
+
+@else if (actualForm == formFornecedorJuridica){
+    <div class='input-group mb-3'>
+        <input class="form-control" type='text' name='name' placeholder='Nome' id='nome' formControlName='name' autocomplete="off" >
+    </div>
+    <div class='input-group mb-3'>
+        <input class="form-control" type='text' name='cnpj' placeholder='CNPJ' id='cnpj' formControlName='cnpj' autocomplete="off" (keyup)="mascaraCnpj($event)" maxlength="14">
+    </div>
+}
+
+    <div class='input-group mb-2'>
+        <input type='tel' class="form-control" placeholder='99 9999-999' (keyup)="handlePhone($event)"  #newnumber maxlength="15">
+        <button type="button" class="btn btn-outline-primary" (click)="addPhone(newnumber.value);newnumber.value = ''">Novo Telefone</button>
+    </div>
+    
+    @for (numero of telefones; track numero){
+
+        <div class="input-group mb-3">
+
+            <input class="form-control" readonly disabled value="{{numero.Numero}}" >
+
+            <button class="btn btn-outline-secondary" (click)="removePhone(numero)">Excluir</button>
+
+        </div>
+
+    }
+
+    <button class="btn btn-outline-success" type="submit">Criar Fornecedor</button>
+
+</form>

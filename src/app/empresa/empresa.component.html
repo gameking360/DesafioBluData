@@ -1,0 +1,17 @@
+<form [formGroup]="formEmpresa"  (ngSubmit)="formSubmit()">
+    <div class="input-group">
+        <input type="text" class="form-control mb-3" autofocus autocomplete="off" name="nomeFantasia" placeholder="Nome Fantasia" id="nomeFantasia" formControlName="nomeFantasia">
+    </div>
+    <div class="input-group">
+        <select class="form-select mb-4" name="" id="">
+            @for (uf of getKeys(); track uf){
+                <option value="A">{{ufs[uf]}}</option>
+            }
+        </select>
+    </div>
+    <div class="input-group">
+        <input type="text" class="form-control mb-3" name="cnpj" autocomplete="off" id="cnpj" placeholder="CNPJ" formControlName="cnpj">
+    </div>
+
+    <button class="btn btn-primary" type="submit">Create Empresa</button>
+</form>
